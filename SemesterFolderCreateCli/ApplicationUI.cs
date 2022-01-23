@@ -36,17 +36,16 @@ namespace SemesterFolderCreateCli
         }
         private void MenuBack()
         {
-            Console.Clear();
             Console.ForegroundColor = ConsoleColor.Black;
             Console.BackgroundColor = ConsoleColor.White;
-            Console.WriteLine("<< Go Back To Main Menu");
+            Console.WriteLine("<< Go Back ");
             Console.ReadKey();
             Console.ResetColor();
         }
         private void RunMainMenu()
         {
             string[] options = { "1.Create new semester folder", "2.Check if MID/FINAL complete", "3.Exit" };
-            MainMenu menu = new MainMenu(options);
+            Menu menu = new Menu(options);
             int selectedIndex = 0;
             do
             {

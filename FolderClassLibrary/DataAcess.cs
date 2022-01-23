@@ -17,7 +17,7 @@ namespace FolderClassLibrary
         {
 
             semesterFolder.FolderName = semesterName;
-            path = semesterFolder.GetRootFolderPath(@"E:\");
+            path = semesterFolder.GetRootFolderPath(@"D:\");
             try
             {
                 if (!Directory.Exists(path))

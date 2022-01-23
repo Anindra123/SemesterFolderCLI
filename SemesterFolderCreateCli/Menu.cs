@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace SemesterFolderCreateCli
 {
-    public class MainMenu
+    public class Menu
     {
         string[] menuOptions;
         int selectedIndex;
-        public MainMenu(string[] options)
+        public Menu(string[] options)
         {
             menuOptions = options;
             selectedIndex = 0;
