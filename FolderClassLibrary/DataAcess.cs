@@ -17,7 +17,7 @@ namespace FolderClassLibrary
         {
 
             semesterFolder.FolderName = semesterName;
-            path = semesterFolder.GetRootFolderPath(@"D:\");
+            path = semesterFolder.GetRootFolderPath(@"E:\");
             try
             {
                 if (!Directory.Exists(path))
@@ -46,7 +46,16 @@ namespace FolderClassLibrary
             }
             return false;
         }
-
+        //Check whether a course folder already exist
+        public bool CheckCourseFolderExists(string courseName,string rootpath)
+        {
+            string fullpath = $@"{rootpath}\{courseName}";
+            if (Directory.Exists(fullpath))
+            {
+                return true;
+            }
+            return false;
+        }
         //Give a list of folder names to create folders from
         public void GetCoureseFoldersNames(string courseName)
         {
@@ -75,6 +84,52 @@ namespace FolderClassLibrary
                         throw;
                     }
 
+                }
+            }
+        }
+
+        //check if directory exist
+        public string CheckSemesterDirectory(string semesterName)
+        {
+            semesterFolder.FolderName = semesterName;
+            path = semesterFolder.GetRootFolderPath(@"E:\");
+            try
+            {
+                if (Directory.Exists(path))
+                {
+                    return path;
+                }
+                else
+                {
+                    throw new ArgumentException("Semester folder not created.Please try again");
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
+        //Add a new course folder on currrent semester folder
+        public void AddCourseDirectory(string rootpath,List<CoursesFolder> folders)
+        {
+            if(folders.Count > 0)
+            {
+                foreach (var folder in folders)
+                {
+                    try
+                    {
+                        if (!Directory.Exists(folder.GetDirectoryPath(rootpath)))
+                        {
+                            Directory.CreateDirectory(folder.GetDirectoryPath(rootpath));
+                        }
+
+                    }
+                    catch (IOException)
+                    {
+                        throw;
+                    }
                 }
             }
         }

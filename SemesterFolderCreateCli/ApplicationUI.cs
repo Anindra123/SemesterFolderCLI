@@ -44,7 +44,7 @@ namespace SemesterFolderCreateCli
         }
         private void RunMainMenu()
         {
-            string[] options = { "1.Create new semester folder", "2.Check if MID/FINAL complete", "3.Exit" };
+            string[] options = { "1.Create new semester folder", "2.Add a course folder", "3.Exit" };
             Menu menu = new Menu(options);
             int selectedIndex = 0;
             do
@@ -58,6 +58,7 @@ namespace SemesterFolderCreateCli
                         MenuBack();
                         break;
                     case 1:
+                        AddCourseFolder();
                         MenuBack();
                         break;
                 }
@@ -68,7 +69,52 @@ namespace SemesterFolderCreateCli
                 ExitApplication();
             }
         }
+        private void AddCourseFolder()
+        {
+            Console.Write("Enter your current semester: ");
+            string currentSemester = Console.ReadLine();
+            List<CoursesFolder> folders = new List<CoursesFolder>();
+            try
+            {
+                string path = dataAcess.CheckSemesterDirectory(currentSemester);
+                SucessMessage("Found!");
+                SucessMessage($"Current Semester : {currentSemester}");
+                Console.WriteLine(@"Enter all new courses names to add folders sperated by a comma ',' :");
+                string[] coursesName = Console.ReadLine().Trim().Split(',');
+                for (int i = 0; i < coursesName.Length; i++)
+                {
+                    if (!dataAcess.CheckCourseFolderExists(coursesName[i],path))
+                    {
+                        CoursesFolder folder = new CoursesFolder();
+                        folder.FolderName = coursesName[i];
+                        folders.Add(folder);
+                        SucessMessage($"Folder created for {coursesName[i]}");
+                    }
+                    else
+                    {
+                        ErrorMessage($"Folder already exist for {coursesName[i]}");
+                        continue;
+                    }
+                }
 
+                try
+                {
+                    dataAcess.AddCourseDirectory(path, folders);
+                }
+                catch (IOException)
+                {
+                    ErrorMessage("Bad Data Given");
+                }
+            }
+            catch(ArgumentException e)
+            {
+                ErrorMessage(e.Message);
+            }
+            catch(IOException)
+            {
+                ErrorMessage("Bad Data Given");
+            }
+        }
         private void CreatFolder()
         {
 
